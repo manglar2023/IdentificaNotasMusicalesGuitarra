@@ -15,34 +15,38 @@
     </style>
     <script>
         function generarCombinacion() {
-            // Array de notas musicales naturales y alteradas
-            var notas = ["Do", "Do#", "Reb", "Re", "Re#", "Mib", "Mi", "Fa", "Fa#", "Solb", "Sol", "Sol#", "Lab", "La", "La#", "Sib", "Si"];
+            const notas = ["Do", "Do#", "Reb", "Re", "Re#", "Mib", "Mi", "Fa", "Fa#", "Solb", "Sol", "Sol#", "Lab", "La", "La#", "Sib", "Si"];
 
-            // Generar un número aleatorio del 1 al 6
-            var numero = Math.floor(Math.random() * 6) + 1;
+            const numero = Math.floor(Math.random() * 6) + 1;
+            const nota = notas[Math.floor(Math.random() * notas.length)];
 
-            // Generar una nota musical aleatoria
-            var nota = notas[Math.floor(Math.random() * notas.length)];
+            // Verificar que elementos de entrada estén definidos
+            const colorElement = document.getElementById("color");
+            const tiempoElement = document.getElementById("tiempo");
+            
+            if (!colorElement || !tiempoElement) {
+                console.error("Elementos de entrada no encontrados");
+                return;
+            }
 
-            // Obtener el color y tiempo especificados por el usuario
-            var color = document.getElementById("color").value;
-            var tiempo = document.getElementById("tiempo").value;
+            const color = colorElement.value;
+            const tiempo = parseInt(tiempoElement.value, 10); // Convertir a número
 
-            // Calcular el tamaño de fuente automáticamente
-            var tamano = Math.min(window.innerWidth, window.innerHeight) * 0.6; // 60% del tamaño menor entre ancho y alto
+            // Ajustar tamaño de fuente para evitar saltos
+            const tamano = Math.min(window.innerWidth, window.innerHeight) * 0.4;
 
-            // Crear el texto a mostrar
-            var texto = `<span style='font-size: ${tamano}px; color: ${color};'>${numero} ${nota}</span>`;
+            const texto = `<span style='font-size: ${tamano}px; color: ${color};'>${numero} ${nota}</span>`;
 
             // Mostrar el texto centrado en la pantalla
             document.getElementById("combinacion").innerHTML = texto;
 
-            // Esperar el tiempo especificado y generar una nueva combinación
-            setTimeout(generarCombinacion, tiempo * 1000);
+            // Aumentar tiempo de espera para evitar ejecución excesiva
+            setTimeout(generarCombinacion, tiempo * 2000);
         }
 
-        // Ajustar el tamaño de fuente automáticamente al cambiar la ventana
-        window.addEventListener("resize", generarCombinacion);
+        // Desactivar el evento de redimensionamiento para evitar cambios inesperados
+        // window.addEventListener("resize", generarCombinacion);
+
     </script>
 </head>
 <body>
@@ -59,7 +63,7 @@
             <option value="purple">Púrpura</option>
         </select><br>
         <label para="tiempo">Tiempo de espera (segundos):</label>
-        <input type="number" id="tiempo" value="1"><br>
+        <input type="number" id="tiempo" value="2"><br> <!-- Aumentar el valor por defecto -->
     </form>
 
     <div id="combinacion"></div> <!-- Contenedor para texto centrado -->
@@ -69,3 +73,4 @@
     </script>
 </body>
 </html>
+
