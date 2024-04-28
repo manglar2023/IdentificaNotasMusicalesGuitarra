@@ -1,76 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Identificar Notas</title>
-    <style>
-        /* Contenedor para centrar horizontal y verticalmente */
-        #combinacion {
-            display: flex;
-            justify-content: center; /* Centrar horizontalmente */
-            align-items: center; /* Centrar verticalmente */
-            height: 100vh; /* Usar toda la altura de la pantalla */
-            text-align: center; /* Alineación de texto */
-        }
-    </style>
-    <script>
-        function generarCombinacion() {
-            const notas = ["Do", "Do#", "Reb", "Re", "Re#", "Mib", "Mi", "Fa", "Fa#", "Solb", "Sol", "Sol#", "Lab", "La", "La#", "Sib", "Si"];
+	<title>Identificar Notas</title>
+	<script>
+		function generarCombinacion() {
+			// Array de notas musicales naturales y alteradas
+			var notas = ["Do", "Do#", "Reb", "Re", "Re#", "Mib", "Mi", "Fa", "Fa#", "Solb", "Sol", "Sol#", "Lab", "La", "La#", "Sib", "Si"];
 
-            const numero = Math.floor(Math.random() * 6) + 1;
-            const nota = notas[Math.floor(Math.random() * notas.length)];
+			// Generar un número aleatorio del 1 al 6
+			var numero = Math.floor(Math.random() * 6) + 1;
 
-            // Verificar que elementos de entrada estén definidos
-            const colorElement = document.getElementById("color");
-            const tiempoElement = document.getElementById("tiempo");
-            
-            if (!colorElement || !tiempoElement) {
-                console.error("Elementos de entrada no encontrados");
-                return;
-            }
+			// Generar una nota musical aleatoria
+			var nota = notas[Math.floor(Math.random() * notas.length)];
 
-            const color = colorElement.value;
-            const tiempo = parseInt(tiempoElement.value, 10); // Convertir a número
+			// Obtener los valores especificados por el usuario
+			var tamano = document.getElementById("tamano").value;
+			var color = document.getElementById("color").value;
+			var tiempo = document.getElementById("tiempo").value;
 
-            // Ajustar tamaño de fuente para evitar saltos
-            const tamano = Math.min(window.innerWidth, window.innerHeight) * 0.4;
+			// Crear el texto a mostrar
+			var texto = "<span style='font-size: " + tamano + "px; color: " + color + ";'>" + numero + " " + nota + "</span>";
 
-            const texto = `<span style='font-size: ${tamano}px; color: ${color};'>${numero} ${nota}</span>`;
+			// Mostrar el texto en la página
+			document.getElementById("combinacion").innerHTML = texto;
 
-            // Mostrar el texto centrado en la pantalla
-            document.getElementById("combinacion").innerHTML = texto;
-
-            // Aumentar tiempo de espera para evitar ejecución excesiva
-            setTimeout(generarCombinacion, tiempo * 2000);
-        }
-
-        // Desactivar el evento de redimensionamiento para evitar cambios inesperados
-        // window.addEventListener("resize", generarCombinacion);
-
-    </script>
+			// Esperar el tiempo especificado y generar una nueva combinación
+			setTimeout(generarCombinacion, tiempo * 1000);
+		}
+	</script>
 </head>
 <body>
-    <h1>Identificar Notas</h1>
-    <p>Especifique color y tiempo de espera:</p>
-    <form>
-        <label para="color">Color:</label>
-        <select id="color">
-            <option value="black">Negro</option>
-            <option value="red">Rojo</option>
-            <option value="blue">Azul</option>
-            <option value="green">Verde</option>
-            <option value="yellow">Amarillo</option>
-            <option value="purple">Púrpura</option>
-        </select><br>
-        <label para="tiempo">Tiempo de espera (segundos):</label>
-        <input type="number" id="tiempo" value="2"><br> <!-- Aumentar el valor por defecto -->
-    </form>
-
-    <div id="combinacion"></div> <!-- Contenedor para texto centrado -->
-
-    <script>
-        generarCombinacion(); /* Generar la primera combinación */
-    </script>
+	<h1>Identifica la Nota en el Mástil</h1>
+	<p>Especifique tamaño, color y tiempo de espera:</p>
+	<form>
+		<label for="tamano">Tamaño (solo número):</label>
+		<input type="number" id="tamano" value="16"><br>
+		<label for="color">Color:</label>
+		<select id="color">
+			<option value="black">Negro</option>
+			<option value="red">Rojo</option>
+			<option value="blue">Azul</option>
+			<option value="green">Verde</option>
+			<option value="yellow">Amarillo</option>
+			<option value="purple">Púrpura</option>
+		</select><br>
+		<label for="tiempo">Tiempo de espera (segundos):</label>
+		<input type="number" id="tiempo" value="1"><br>
+	</form>
+	<h1>Cuerda y Nota:</h1>
+	<div id="combinacion"></div>
+	<script>
+		generarCombinacion();
+	</script>
 </body>
 </html>
-
